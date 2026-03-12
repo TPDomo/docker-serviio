@@ -59,7 +59,9 @@ RUN if [ "$TARGETPLATFORM" = "linux/386" ] || [ "$TARGETPLATFORM" = "linux/arm/7
 RUN set -ex \
 ### Create WORKDIR and get all ingredients		
 	&& DIR=$(mktemp -d) && cd ${DIR} \
-	&& wget https://raw.githubusercontent.com/soerentsch/dcraw/master/dcraw.c \
+	### && wget https://raw.githubusercontent.com/soerentsch/dcraw/master/dcraw.c \
+	### wgetting dcraw.c from the real origin.
+	&& wget https://dechifro.org/dcraw/dcraw.c \
 	&& wget https://download.serviio.org/releases/serviio-${SERVIIO_VERSION}-linux.tar.gz && tar xvf serviio-${SERVIIO_VERSION}-linux.tar.gz \
 ### Build dcraw	
 	&& cd ${DIR} \
