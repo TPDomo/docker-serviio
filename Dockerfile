@@ -4,7 +4,7 @@
 ARG ALPINE_VERSION=3.23.2
 ARG TARGETPLATFORM
 
-FROM --platform=$TARGETPLATFORM alpine:${ALPINE_VERSION}
+FROM alpine:${ALPINE_VERSION}
 
 ARG BUILD_DATE
 ARG BUILD_VCS_REF
@@ -14,26 +14,25 @@ ARG JRE_PACKAGE_32=openjdk8-jre
 ARG JRE_PACKAGE_64=openjdk25-jre
 
 LABEL \
-	org.label-schema.build-date="${BUILD_DATE}" \
-	org.label-schema.description="DLNA Serviio Container" \
-	org.label-schema.name="DLNA Serviio Container" \
-	org.label-schema.schema-version="1.0" \
-	org.label-schema.url="https://hub.docker.com/r/soerentsch/serviio/" \
-	org.label-schema.vcs-ref="${BUILD_VCS_REF}" \
-	org.label-schema.vcs-url="https://github.dev/soerentsch/docker-serviio/" \
-	org.label-schema.vendor="[soerentsch] Soeren <soerentsch@gmail.com>" \
-	org.label-schema.version="${SERVIIO_VERSION}" \
-	maintainer="[soerentsch] Soeren <soerentsch@gmail.com>" \
-	org.opencontainers.image.created="${BUILD_DATE}" \
-	org.opencontainers.image.description="DLNA Serviio Container" \
-	org.opencontainers.image.title="DLNA Serviio Container" \
-	org.opencontainers.image.url="https://hub.docker.com/r/soerentsch/serviio/" \
-	org.opencontainers.image.revision="${BUILD_VCS_REF}" \
-	org.opencontainers.image.source="https://github.dev/soerentsch/docker-serviio/" \
-	org.opencontainers.image.vendor="[soerentsch] Soeren <soerentsch@gmail.com>" \
-	org.opencontainers.image.version="${SERVIIO_VERSION}" \
-	org.opencontainers.image.authors="[soerentsch] Soeren <soerentsch@gmail.com>"
-
+ org.label-schema.build-date="${BUILD_DATE}" \
+ org.label-schema.description="DLNA Serviio Container" \
+ org.label-schema.name="DLNA Serviio Container" \
+ org.label-schema.schema-version="1.0" \
+ org.label-schema.url="https://hub.docker.com/r/soerentsch/serviio/" \
+ org.label-schema.vcs-ref="${BUILD_VCS_REF}" \
+ org.label-schema.vcs-url="https://github.dev/soerentsch/docker-serviio/" \
+ org.label-schema.vendor="[soerentsch] Soeren <soerentsch@gmail.com>" \
+ org.label-schema.version="${SERVIIO_VERSION}" \
+ maintainer="[soerentsch] Soeren <soerentsch@gmail.com>" \
+ org.opencontainers.image.created="${BUILD_DATE}" \
+ org.opencontainers.image.description="DLNA Serviio Container" \
+ org.opencontainers.image.title="DLNA Serviio Container" \
+ org.opencontainers.image.url="https://hub.docker.com/r/soerentsch/serviio/" \
+ org.opencontainers.image.revision="${BUILD_VCS_REF}" \
+ org.opencontainers.image.source="https://github.dev/soerentsch/docker-serviio/" \
+ org.opencontainers.image.vendor="[soerentsch] Soeren <soerentsch@gmail.com>" \
+ org.opencontainers.image.version="${SERVIIO_VERSION}" \
+ org.opencontainers.image.authors="[soerentsch] Soeren <soerentsch@gmail.com>"
 ENV JAVA_HOME="/usr"
 ENV JAVA_OPTS="-XX:+UsePerfData"
 
@@ -43,43 +42,42 @@ RUN if [ "$TARGETPLATFORM" = "linux/386" ] || [ "$TARGETPLATFORM" = "linux/arm/7
     else \
       JRE_PACKAGE=${JRE_PACKAGE_64}; \
     fi \
-	&& echo "https://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories \
-	&& echo "https://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories \
-	&& echo "https://dl-cdn.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories \
-	&& apk update && apk upgrade \
-	&& apk add --no-cache --update \
-		ffmpeg \
-		jasper \
-		${JRE_PACKAGE} \ 
-	&& apk add --no-cache --update --virtual=.build-dependencies \
-		g++ \ 
-		jasper-dev \
-		lcms2-dev \ 
-
+ && echo "https://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories \
+ && echo "https://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories \
+ && echo "https://dl-cdn.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories \
+ && apk update && apk upgrade \
+ && apk add --no-cache --update \
+ ffmpeg \
+ jasper \
+ ${JRE_PACKAGE} \ 
+ && apk add --no-cache --update --virtual=.build-dependencies \
+ g++ \ 
+ jasper-dev \
+ lcms2-dev
 RUN set -ex \
 ### Create WORKDIR and get all ingredients		
-	&& DIR=$(mktemp -d) && cd ${DIR} \
-	### && wget https://raw.githubusercontent.com/soerentsch/dcraw/master/dcraw.c \
-	### wgetting dcraw.c from the real origin.
-	&& wget https://dechifro.org/dcraw/dcraw.c \
-	&& wget https://download.serviio.org/releases/serviio-${SERVIIO_VERSION}-linux.tar.gz && tar xvf serviio-${SERVIIO_VERSION}-linux.tar.gz \
+ && DIR=$(mktemp -d) && cd ${DIR} \
+ ### && wget https://raw.githubusercontent.com/soerentsch/dcraw/master/dcraw.c \
+ ### wgetting dcraw.c from the real origin.
+ && wget https://dechifro.org/dcraw/dcraw.c \
+ && wget https://download.serviio.org/releases/serviio-${SERVIIO_VERSION}-linux.tar.gz && tar xvf serviio-${SERVIIO_VERSION}-linux.tar.gz \
 ### Build dcraw	
-	&& cd ${DIR} \
-	&& gcc -o dcraw -O4 dcraw.c -lm -ljasper -ljpeg -llcms2 \
-	&& cp dcraw /usr/bin/dcraw \
-	&& chmod +x /usr/bin/dcraw \
+ && cd ${DIR} \
+ && gcc -o dcraw -O4 dcraw.c -lm -ljasper -ljpeg -llcms2 \
+ && cp dcraw /usr/bin/dcraw \
+ && chmod +x /usr/bin/dcraw \
 ### Install Serviio	
-	&& cd ${DIR} \
-	&& mkdir -p /opt/serviio \
-	&& mkdir -p /media/serviio \
-	&& mv ./serviio-${SERVIIO_VERSION}/* /opt/serviio \
-	&& chmod +x /opt/serviio/bin/serviio.sh \
-	&& mkdir -p /opt/serviio/log \
-	&& touch /opt/serviio/log/serviio.log \
+ && cd ${DIR} \
+ && mkdir -p /opt/serviio \
+ && mkdir -p /media/serviio \
+ && mv ./serviio-${SERVIIO_VERSION}/* /opt/serviio \
+ && chmod +x /opt/serviio/bin/serviio.sh \
+ && mkdir -p /opt/serviio/log \
+ && touch /opt/serviio/log/serviio.log \
 ### Cleanup	
-	&& rm -rf ${DIR} \
-	&& apk del --purge .build-dependencies \
-	&& rm -rf /var/cache/apk/*
+ && rm -rf ${DIR} \
+ && apk del --purge .build-dependencies \
+ && rm -rf /var/cache/apk/*
 
 VOLUME ["/opt/serviio/config", "/opt/serviio/library",  "/opt/serviio/log", "/opt/serviio/plugins", "/media/serviio"]
 
@@ -98,4 +96,5 @@ EXPOSE 23524/tcp
 
 HEALTHCHECK --start-period=5m CMD wget --quiet --tries=1 -O /dev/null --server-response --timeout=5 http://127.0.0.1:23423/rest/ping || exit 1
 
-CMD tail -f /opt/serviio/log/serviio.log & /opt/serviio/bin/serviio.sh
+CMD ["tail -f /opt/serviio/log/serviio.log & /opt/serviio/bin/serviio.sh",""]
+
