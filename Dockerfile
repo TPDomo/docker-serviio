@@ -96,5 +96,18 @@ EXPOSE 23524/tcp
 
 HEALTHCHECK --start-period=5m CMD wget --quiet --tries=1 -O /dev/null --server-response --timeout=5 http://127.0.0.1:23423/rest/ping || exit 1
 
-CMD ["tail -f /opt/serviio/log/serviio.log & /opt/serviio/bin/serviio.sh",""]
-
+COPY --chmod=755 <<EOT /entrypoint.sh
+#!/usr/bin/env sh
+set -e
+if [ -e /opt/serviio/config/patch/yes ]
+then
+    echo "potential patch found, trying to execute!"
+    if [ -e /opt/serviio/config/patch/serviio-patch.sh ]
+    then
+        /bin/sh /opt/serviio/config/patch/serviio-patch.sh
+    fi
+fi
+tail -f /opt/serviio/log/serviio.log &
+/opt/serviio/bin/serviio.sh
+EOT
+CMD ["/entrypoint.sh"]
