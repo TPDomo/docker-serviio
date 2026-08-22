@@ -30,8 +30,11 @@ Serviio serve DLNA over the default port `1900` with `UDP`, the media itself wil
 
 #### If you want to use patching function place your code into:
    /opt/serviio/config/patch/serviio-patch.sh
+   
 and create a file (may be empty):
+
    /opt/serviio/config/patch/yes
+
 
 ## Container Settings
 ### Build Args
