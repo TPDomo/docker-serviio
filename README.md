@@ -28,12 +28,15 @@ The webui is at `<your-ip>:23423/console`.
 
 Serviio serve DLNA over the default port `1900` with `UDP`, the media itself will be provided over port `8895` with `TCP`.
 
-#### If you want to use patching function place your code into:
-   `/opt/serviio/config/patch/serviio-patch.sh`
+#### If you want to use patching function, place your code inside container 
+#### ('conf' volume will be a '/opt/serviio/config/' inside the container):
+
+   `{conf_volume}/patch/serviio-patch.sh`
    
 and create a file (may be empty):
 
-   `/opt/serviio/config/patch/yes`
+   `{conf_volume}/patch/yes`
+
 
 
 ## Container Settings
