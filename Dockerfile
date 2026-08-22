@@ -9,7 +9,7 @@ ARG BUILD_DATE
 ARG BUILD_VCS_REF
 
 ARG SERVIIO_VERSION=2.5
-ARG JRE_PACKAGE
+ARG JRE_PACKAGE=openjdk25-jre
 
 LABEL \
  org.label-schema.build-date="${BUILD_DATE}" \
