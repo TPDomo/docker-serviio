@@ -9,7 +9,7 @@
 This is a fork of: [soerentsch/docker-serviio](https://github.com/soerentsch/docker-serviio)
 with added function to apply optional patches before starting Serviio service.
 
-[soerentsch/docker-serviio] Started as a fork of [riftbit/docker-serviio](https://github.com/riftbit/docker-serviio), just to provide the newest security and performance patches.
+[soerentsch/serviio](https://hub.docker.com/r/soerentsch/serviio/) started as a fork of [riftbit/docker-serviio](https://github.com/riftbit/docker-serviio), just to provide the newest security and performance patches.
 Meanwhile [riftbit/docker-serviio](https://github.com/riftbit/docker-serviio) seems not longer maintained.
 
 ## Usage
