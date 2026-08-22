@@ -4,11 +4,12 @@
 
 [![](https://images.microbadger.com/badges/image/soerentsch/serviio.svg)](https://microbadger.com/images/soerentsch/serviio) [![Docker Pulls](https://img.shields.io/docker/pulls/soerentsch/serviio)](https://hub.docker.com/r/soerentsch/serviio/) [![Docker Stars](https://img.shields.io/docker/stars/soerentsch/serviio)](https://hub.docker.com/r/soerentsch/serviio/) [![GitHub last commit](https://img.shields.io/github/last-commit/soerentsch/docker-serviio/dockerhub.svg)](https://github.com/soerentsch/docker-serviio/dockerhub) [![Join the chat at https://gitter.im/docker-serviio/community](https://badges.gitter.im/docker-serviio/community.svg)](https://gitter.im/docker-serviio/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) 
   
-Link on docker hub: [soerentsch/serviio](https://hub.docker.com/r/soerentsch/serviio/)
+(Base Repository) Link on docker hub: [soerentsch/serviio](https://hub.docker.com/r/soerentsch/serviio/)
 
-Link on github: [soerentsch/docker-serviio](https://github.com/soerentsch/docker-serviio)
+This is a fork of: [soerentsch/docker-serviio](https://github.com/soerentsch/docker-serviio)
+with added function to apply optional patches before starting Serviio service.
 
-Started as a fork of [riftbit/docker-serviio](https://github.com/riftbit/docker-serviio), just to provide the newest security and performance patches.
+[soerentsch/docker-serviio] Started as a fork of [riftbit/docker-serviio](https://github.com/riftbit/docker-serviio), just to provide the newest security and performance patches.
 Meanwhile [riftbit/docker-serviio](https://github.com/riftbit/docker-serviio) seems not longer maintained.
 
 ## Usage
@@ -30,9 +31,9 @@ Serviio serve DLNA over the default port `1900` with `UDP`, the media itself wil
 ## Container Settings
 ### Build Args
 
- - `ALPINE_VERSION` = 3.23.2
- - `SERVIIO_VERSION` = 2.4
- - `JRE_PACKAGE` = openjdk8-jre (32bit) / openjdk25-jre (64bit)
+ - `ALPINE_VERSION` = 3.24.1
+ - `SERVIIO_VERSION` = 2.5
+ - `JRE_PACKAGE` = openjdk25-jre (64bit)
 
 ### Exposed Ports
 
@@ -52,14 +53,16 @@ Serviio serve DLNA over the default port `1900` with `UDP`, the media itself wil
  - `/opt/serviio/log`
  - `/media/serviio` - put media content here and add in serviio gui this path
 
-## Platform differences
+## Platform 
 ### JVM
- - 32bit Platforms (x86, 386, arm7) will use OpenJDK 8 (the latest OpenJDK with 32bit support).
  - 64bit Platforms (x86_64, amd64, aarch64, arm64, s390x, riscv64, loongarch64) will use OpenJDK 25.
 
 ## Container Changelog (dd.mm.yy)
  | Date | Changes |
  | ---- | ------- |
+ | **17.06.2026** | Fix JRE
+ | **17.06.2026** | Update Serviio version to 2.5
+ | **17.06.2026** | Update alpine to 3.24.1
  | **05.01.2026** | Update alpine to 3.23.2. Upgrade OpenJDK 22 to 25
  | **22.10.2025** | Update alpine to 3.22.2
  | **01.10.2025** | Update FFmpeg to 8. Many minor alpine updates.
